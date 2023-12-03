@@ -1,0 +1,12 @@
+<%- include('../navbar'); -%>
+<h1>orgs</h1>
+
+<ul>
+    <% if(orgs){ %>
+        <% for(let i of orgs){ %>
+            <li><a href = '/organizations/view/<%= i._id %>'><h3><%= i.name %></h3></a></li>
+        <% } %>
+    <% } %>
+</ul>
+
+<a href = '/organizations/create'>Create an organization</a>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+    <h1>My Events</h1>
+    <h1>Events at <%= institution %></h1>
+    <ul>
+        <% for(let i of institutionalEvents){ %>
+            <li><a href = '/events/view/<%= i._id %>'><%= i.title %></a></li>
+        <% } %>
+    </ul>
+    <h1>Popular Events</h1>
+</html>

@@ -1,0 +1,18 @@
+<nav>
+    <h1><a href = '/'>Fraternize</a></h1>
+    <ul>
+        <li><a href = '/organizations/viewall'>Organizations</a></li>
+        <li><a href = '/events/viewall'>Events</a></li>
+        <% if(user){ %>
+            <li>Hello, <%= user.firstname %></li>
+            <li><a href = '/users/logout'>Logout</a></li>
+        <% }else if(org){ %>
+            <li>Welcome, <%= org.name %></li>
+            <li><a href = '/organizations/logout'>Logout</a></li>
+        <% }else{ %>
+            <li><a href = '/signup'>Sign Up</a></li>
+            <li><a href = '/login'>Login</a></li>
+        <% } %>
+        
+    </ul>
+</nav>

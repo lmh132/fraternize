@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+    <%- include('navbar'); -%>
+    <h1>Home</h1>
+    <% if(user){ %>
+        <%- include('users/homepageview'); -%>
+    <% }else if(org){ %>
+        <%- include('organizations/homepageview'); -%>
+    <% } %>
+</html>
+

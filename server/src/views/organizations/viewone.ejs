@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+    <%- include('../navbar'); -%>
+    <h1><%= selected.name %> at <%= selected.affiliation %></h1>
+    <% if(selected.events){ %>
+        <% for(let i of selected.events){ %>
+            <li><a href = '/events/view/<%= i._id %>'><%= i.title %></a></li>
+        <% } %>
+    <% } %>
+</html>

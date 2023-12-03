@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <%- include('../navbar'); -%>
+    <form>
+        <h2>Create an Event</h2>
+        <label for = 'title'>Title: </label>
+        <input type = 'text' name = 'title' required />
+        <div class="title error"></div>
+        <label for = 'description'>Description: </label>
+        <input type = 'text' name = 'description' required />
+        <div class = "description error"></div>
+        <label for = 'capacity'>Capacity: </label>
+        <input type = 'number' name = 'capacity' required />
+        <div class = "capacity error"></div>
+        <label for = 'location'>Location: </label>
+        <input type = 'text' name = 'location' required />
+        <div class = "location error"></div>
+        <label for = 'datetime'>Date/time: </label>
+        <input type = 'text' name = 'datetime' required />
+        <div class = "datetime error"></div>
+        <label for = 'institutiononly'>Institution only: </label>
+        <input type = 'checkbox' name = 'institutiononly'/>
+        <div class = "institutiononly error"></div>
+        <label for = 'private'>Private: </label>
+        <input type = 'checkbox' name = 'private'/>
+        <div class = "private error"></div>
+        <button>Go!</button>
+    </form>
+</html>
+<script>
+    const form = document.querySelector('form');
+    //const nameError = document.querySelector('.name.error')
+    //const institutionError = document.querySelector('.institution.error')
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        //nameError.textContent = '';
+        //institutionError.textContent = '';
+        const host = <%- _org %>;
+        const institution = <%- _org %>.affiliation;
+        const title = form.title.value;
+        const description = form.description.value;
+        const capacity = form.capacity.value;
+        const _location = form.location.value;
+        const datetime = form.datetime.value;
+        const institutiononly = form.institutiononly.checked;
+        const private = form.private.checked;
+        
+        try{
+            const result = await fetch('/events/create', {
+                method : 'POST',
+                body : JSON.stringify({ host : host, institution, title, description, capacity, location : _location, datetime, institutiononly, private }),
+                headers : { 'Content-Type' : 'application/json' }
+            });
+            const data = await result.json();
+            //console.log(data)
+            /*
+            if(data.errors){
+                console.log(data)
+                emailError.textContent = data.errors.email;
+                passwordError.textContent = data.errors.password;
+            }
+            */
+            if(data.event){
+                location.assign('/');
+            }
+        }catch(err){
+            console.log(err);
+        }
+    });
+</script>

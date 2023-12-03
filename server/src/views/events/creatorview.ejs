@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <%- include('../navbar'); -%>
+    <h1><%= selected.title %></h1>
+    <h3>Host: <%= selected.host.name %></h3>
+    <h3>Description: <%= selected.description %></h3>
+    <h3>Capacity: <%= selected.capacity %></h3>
+    <h3>Location: <%= selected.location %></h3>
+    <h3>Date/time: <%= selected.datetime %></h3>
+    <h3>Institution Only: <%= selected.institutiononly %></h3>
+    <h3>Private: <%= selected.private %></h3>
+    <h3>Invited: </h3>
+    <h3>Attending: </h3>
+    <ul>
+        <% for(let i of selected.attendingList){ %>
+            <li><%= i.firstname %> <%= i.lastname %></li>
+        <% } %>
+    </ul>
+</html>
