@@ -9,23 +9,23 @@
     <h3>Date/time: <%= selected.datetime %></h3>
     <h3>Institution Only: <%= selected.institutiononly %></h3>
     <h3>Private: <%= selected.private %></h3>
-    <button id='signup' >Sign Up</button>
+    <% if(user){ %>
+        <button id='signup' >Sign Up</button>
+    <% } %>
 </html>
 
 <script>
     const button = document.getElementById('signup');
     button.addEventListener("click", async(e) => {
         e.preventDefault();
-        let event = "<%= selected.id %>";
-        let user = "<%= user.id %>";
+        const id = "<%= selected.id %>"
         try{
-            const result = await fetch(`/events/view/${event}`, {
+            const result = await fetch(`/events/signup`, {
                 method : 'POST',
-                body : JSON.stringify({ eventId : event, userId : user }),
+                body : JSON.stringify({ eventId : id }),
                 headers : { 'Content-Type' : 'application/json' }
             });
             const data = await result.json();
-            //console.log(data)
             if(data.event){
                 location.assign('/');
             }

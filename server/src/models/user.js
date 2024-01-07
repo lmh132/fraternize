@@ -31,8 +31,14 @@ const userSchema = new Schema({
     },
     "attendingEvents" : [
         { type : Schema.Types.ObjectId, ref : "Event" }
-    ]
+    ],
+    "hookEnabled" : {
+        type : Boolean,
+        default : true
+    }
 });
+
+
 
 userSchema.statics.login = async function(email, password){
     const user = await this.findOne({ email : email });
@@ -46,9 +52,22 @@ userSchema.statics.login = async function(email, password){
     throw Error('incorrect email');
 }
 
+userSchema.statics.pushEvent = async function(userId, eventId){
+    try{
+        const user = await this.findById(userId);
+        user.attendingEvents.push(eventId);
+        user.save();
+    }catch(err){
+        console.log(err);
+    }
+}
+
 userSchema.pre("save", async function(next){
-    const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password, salt);
+    if(this.hookEnabled){
+        const salt = await bcrypt.genSalt();
+        this.password = await bcrypt.hash(this.password, salt);
+        this.hookEnabled = false;
+    }
     next();
 })
 

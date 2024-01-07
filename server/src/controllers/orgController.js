@@ -41,7 +41,8 @@ async function create(req, res){
                                             'affiliation' : affiliation,
                                             'email' : email,
                                             'password' : password,
-                                            'events' : []});
+                                            'events' : [],
+                                            'hookEnabled' : true});
         const token = createToken(org._id);
         res.cookie('jwt', token, { httpOnly : true, maxAge : maxAge*1000 });
         res.status(201).json({ org : org._id });

@@ -1,5 +1,5 @@
 const Event = require('../models/event');
-const Organization = require('../models/organization');
+const User = require('../models/user');
 
 async function create(req, res){
     const { host, institution, title, description, capacity, location, datetime, institutiononly, private } = req.body;
@@ -32,8 +32,10 @@ async function view(req, res){
 }
 
 async function signUp(req, res){
-    const { eventId, userId } = req.body;
+    const { eventId } = req.body;
+    const userId = res.locals.user._id;
     Event.pushAttendee(eventId, userId);
+    User.pushEvent(userId, eventId);
     res.status(201).json({ event : eventId });
 }
 

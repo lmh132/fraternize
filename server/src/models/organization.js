@@ -32,7 +32,11 @@ const orgSchema = new Schema({
     },
     "events" : [
         { type : Schema.Types.ObjectId, ref : "Event" }
-    ]
+    ],
+    "hookEnabled" : {
+        type : Boolean,
+        default : true
+    }
 });
 
 orgSchema.statics.pushEvent = async function(orgId, eventId){
@@ -57,9 +61,13 @@ orgSchema.statics.login = async function(email, password){
     throw Error('incorrect email');
 }
 
+//Re-hashing password every time, changes it
 orgSchema.pre("save", async function(next){
-    const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password, salt);
+    if(this.hookEnabled){
+        const salt = await bcrypt.genSalt();
+        this.password = await bcrypt.hash(this.password, salt);
+        this.hookEnabled = false;
+    }
     next();
 })
 

@@ -22,6 +22,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.get('*', checkUser);
 app.get('*', checkOrg);
+app.post('*', checkUser);
+app.post('*', checkOrg);
 app.use('/', mainRouter);
 app.use('/organizations', orgRouter);
 app.use('/events', eventRouter);

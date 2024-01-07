@@ -45,12 +45,17 @@ const eventSchema = new Schema({
     "attendingList" : [
         { type : Schema.Types.ObjectId, ref : "User" }
     ],
+    "hookEnabled" : {
+        type : Boolean,
+        default : true
+    }
 });
 
 eventSchema.statics.pushAttendee = async function(eventId, userId){
     try{
         let event = await this.findById(eventId);
         event.attendingList.push(userId);
+        event.hookEnabled = false;
         event.save();
     }catch(err){
         console.log(err);
@@ -66,10 +71,15 @@ eventSchema.statics.isValid = async function(eventId, userId){
     }
 }
 
+//post, hookenabled not effective
 eventSchema.post("save", async function(doc, next){
-    let org = doc.host;
-    doc.institution = org.affiliation;
-    Organization.pushEvent(org, this._id);
+    if(this.hookEnabled){
+        let org = doc.host;
+        doc.institution = org.affiliation;
+        Organization.pushEvent(org, this._id);
+        console.log("event pushed");
+        this.save()
+    }
     next();
 });
 

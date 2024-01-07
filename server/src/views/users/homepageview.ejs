@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
     <h1>My Events</h1>
+        <% for(let i of myEvents){ %>
+            <li><a href = '/events/view/<%= i._id %>'><h3><%= i.title %></h3></a></li>
+        <% } %>
     <h1>Events at <%= institution %></h1>
     <ul>
         <% for(let i of institutionalEvents){ %>

@@ -19,7 +19,7 @@ router.get('/view/:eventId', (req, res) => {
     view(req, res);
 });
 
-router.post('/view/:eventId', requireUserAuth, (req, res) => {
+router.post('/signup', requireUserAuth, (req, res) => {
     signUp(req, res);
 });
 
