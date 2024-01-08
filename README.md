@@ -1,3 +1,2 @@
 # fraternize
-idk
-nG22vR9cpwO3ZCea
+A website to help fraternities and other organizations better host parties and events
